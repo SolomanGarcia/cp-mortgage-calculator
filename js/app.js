@@ -67,16 +67,33 @@ for (let i = 0; i < inputTexts.length; i++) {
   inputTexts[i].addEventListener("input", updateInputsState);
 }
 
+let inputSlides = document.getElementsByClassName("form-group__range-slide");
+for (let i = 0; i < inputSlides.length; i++) {
+  inputSlides[i].addEventListener("input", updateInputsState);
+}
+
 function updateInputsState(event) {
   let name = event.target.name;
   let value = event.target.value;
   if (name == "price") {
     value = getNumber(value);
   }
+  if (event.target.type == "range") {
+    let total = (document.getElementsByClassName(
+      `total__${name}`
+    )[0].innerHTML = `${value}`);
+  }
   state = {
     ...state,
-    [name]: value
-  }
+    [name]: value,
+  };
 }
+
+document.getElementsByTagName("form")[0].addEventListener("submit", (event) => {
+  event.preventDefault();
+  document
+    .getElementsByClassName("mg-page__right")[0]
+    .classList.add("mg-page__right--animate");
+});
 
 console.log(state);
